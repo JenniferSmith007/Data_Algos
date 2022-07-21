@@ -14,7 +14,7 @@
 // b  c
 // /\  \
 // d e  f
-
+const treeify = require('treeify')
 class Node {
   constructor(val) {
     this.val = val;
@@ -27,6 +27,99 @@ class BinarySearchTree {
   constructor() {
     this.root = null;
   }
+
+
+  insert(value){
+    const newNode = new Node(value);
+    // to insert value see if the value is less than or greater than the root 
+    // if less than then insert node on the left of the tree 
+    // if greater than then insert on the right of the tree 
+    // init vari to keep track of curr node 
+    if (!this.root){
+      this.root = newNode
+      return this
+      // if there is no current node then place the value being pushed in as the root and return it. 
+    }
+    let currNode = this.root;
+    while(true){
+      if (value === currNode.val) return undefined 
+      // while the following statments are true 
+      if(value < currNode.val){
+        // once we check if the value is less than the tree root value 
+        // place it on the left 
+        // but first check if there is anything on the left 
+        // if there is no node.left then place a new node with the value you want to insert
+        if(!currNode.left){
+          currNode.left = newNode;
+          return this
+        }
+        // if there is nodes on the left you need to continue pushing currnode down to it gets a leafnode 
+        currNode = currNode.left 
+      } else if(value > currNode.val){
+        if(!currNode.right){
+          currNode.right = newNode;
+          return this
+        }
+        currNode = currNode.right;
+      } 
+
+    }
+  }
+
+
+
+
+
+insertRec(value){
+  const newNode = new Node(value);
+if(!this.root){
+  this.root = newNode
+  return this
+}
+let currNode = this.root;
+const addNode = ()=> {
+  if (value === currNode.val) return undefined 
+  // while the following statments are true 
+  if(value < currNode.val){
+    // once we check if the value is less than the tree root value 
+    // place it on the left 
+    // but first check if there is anything on the left 
+    // if there is no node.left then place a new node with the value you want to insert
+    if(!currNode.left){
+      currNode.left = newNode;
+      return this
+    }
+    // if there is nodes on the left you need to continue pushing currnode down to it gets a leafnode 
+    currNode = currNode.left 
+    addNode()
+  } else if(value > currNode.val){
+    if(!currNode.right){
+      currNode.right = newNode;
+      return this
+    }
+    currNode = currNode.right;
+    addNode()
+  } 
+
+}
+addNode()
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 // end of array rep. top of the stack
@@ -97,18 +190,18 @@ const findclosestValInBstHelperIter = (tree, target, closest) => {
   }
 };
 
-const a = new Node("a");
-const b = new Node("b");
-const c = new Node("c");
-const d = new Node("d");
-const e = new Node("e");
-const f = new Node("f");
+// const a = new Node("a");
+// const b = new Node("b");
+// const c = new Node("c");
+// const d = new Node("d");
+// const e = new Node("e");
+// const f = new Node("f");
 
-a.left = b;
-a.right = c;
-b.left = d;
-b.right = e;
-c.right = f;
+// a.left = b;
+// a.right = c;
+// b.left = d;
+// b.right = e;
+// c.right = f;
 
 // time and space:
 // n = nodes
@@ -116,4 +209,15 @@ c.right = f;
 // space: o(n) const space used for nodes.
 
 // depthFirstValues(a);
-console.log(`this is rec ${depthFirstValuesRecursive(a)}`);
+// console.log(`this is rec ${depthFirstValuesRecursive(a)}`);
+
+
+
+const tree = new BinarySearchTree();
+// tree.root = new Node(10)
+tree.insert(15)
+tree.insert(12)
+tree.insert(16)
+tree.insert(19)
+tree.insert(10)
+console.log(treeify.asTree(tree,true))
