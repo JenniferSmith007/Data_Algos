@@ -106,11 +106,57 @@ addNode()
 
 }
 
+contains(value){
+  // if(this.val === value){
+  //   return this;
+  // }
+  let currNodeCon = this;
+  while(currNodeCon !== null){
+   if(value < currNodeCon.val){
+    currNodeCon = currNodeCon.left 
+   } else if (value > currNodeCon.val){
+    currNodeCon = currNodeCon.right 
+   } else{
+    
+    return true  
+
+  } 
+ 
+  
+  }
+  return false
+}
+
+
+
+remove(value, parentNode = null){
+let currentNodeRem = this;
+while(currentNodeRem !== null){
+  if (value < currentNodeRem.val){
+    parentNode = currentNodeRem
+    currentNodeRem = currentNodeRem.left
+  } else if(value > currentNodeRem.val){
+    parentNode = currentNodeRem.right
+    currentNodeRem = currentNodeRem.right
+  } else {
+    if (currentNodeRem.left && currentNodeRem !== null){
+      currentNodeRem.val = currentNodeRem.right.getMinValue()
+      currentNodeRem.right.remove(currentNodeRem.val, currentNodeRem)
+    } else if(parentNode.left === currentNodeRem){
+      parentNode.left = currentNodeRem.left
+    } if (currentNodeRem.left !== null ){
+
+    }
+  }
+}
 
 
 
 
 
+
+
+}
 
 
 
@@ -220,4 +266,6 @@ tree.insert(12)
 tree.insert(16)
 tree.insert(19)
 tree.insert(10)
+console.log(tree.contains(2))
+
 console.log(treeify.asTree(tree,true))
